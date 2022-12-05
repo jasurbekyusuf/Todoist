@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Todoist.Api.Brokers.Storages;
 
 namespace Todoist.Api
 {
@@ -21,8 +22,9 @@ namespace Todoist.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddDbContext<StorageBroker>();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(
