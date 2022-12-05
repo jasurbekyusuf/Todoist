@@ -3,7 +3,6 @@
 // Free to use to bring order in your workplace
 //==================================================
 
-using System.Linq;
 using System.Threading.Tasks;
 using EFxceptions;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +26,8 @@ namespace Todoist.Api.Brokers.Storages
 
             broker.Entry(@object).State = EntityState.Added;
             await broker.SaveChangesAsync();
+
+            return @object;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
