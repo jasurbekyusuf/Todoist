@@ -3,13 +3,15 @@
 // Free to use to bring order in your workplace
 //==================================================
 
+using System.Threading.Tasks;
 using EFxceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Todoist.Api.Models.Tickets;
 
 namespace Todoist.Api.Brokers.Storages
 {
-    public partial class StorageBroker : EFxceptionsContext
+    public partial class StorageBroker : EFxceptionsContext , IStorageBroker
     {
         private readonly IConfiguration configuration;
 
@@ -25,6 +27,11 @@ namespace Todoist.Api.Brokers.Storages
                 this.configuration.GetConnectionString(name:"DefaultConnection");
             
             optionsBuilder.UseSqlServer(connectionString);
+        }
+
+        ValueTask<Task> IStorageBroker.InsertTaskAsync(Ticket ticket)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
