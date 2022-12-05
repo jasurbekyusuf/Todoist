@@ -3,13 +3,12 @@
 // Free to use to bring order in your workplace
 //==================================================
 
-using System.Threading.Tasks;
-using Todoist.Api.Models.Tickets;
-
-namespace Todoist.Api.Brokers.Storages
+namespace Todoist.Api.Models.Tickets
 {
-    public partial interface IStorageBroker
+    public enum Priority
     {
-        ValueTask<Ticket> InsertTicketAsync(Ticket ticket);
+        LOW,
+        MEDIUM,
+        HIGH
     }
 }

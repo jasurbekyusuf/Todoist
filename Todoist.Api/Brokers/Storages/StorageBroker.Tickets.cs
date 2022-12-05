@@ -3,6 +3,7 @@
 // Free to use to bring order in your workplace
 //==================================================
 
+using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Todoist.Api.Models.Tickets;
@@ -13,13 +14,7 @@ namespace Todoist.Api.Brokers.Storages
     {
         public DbSet <Ticket> Tickets { get; set; }
 
-        public async ValueTask<Ticket> InsertTaskAsync(Ticket ticket) 
-        {
-            var broker = new StorageBroker(this.configuration);
-            await broker.Tickets.AddAsync(ticket);
-            await broker.SaveChangesAsync();
-
-            return ticket;
-        }
+        public async ValueTask<Ticket> InsertTicketAsync(Ticket ticket) =>
+            await InsertAsync(ticket);
     }
 }
