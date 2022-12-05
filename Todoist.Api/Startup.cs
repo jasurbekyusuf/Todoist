@@ -24,6 +24,7 @@ namespace Todoist.Api
         {
             services.AddControllers();
             services.AddDbContext<StorageBroker>();
+            services.AddTransient<StorageBroker, StorageBroker>();
 
             services.AddSwaggerGen(c =>
             {
