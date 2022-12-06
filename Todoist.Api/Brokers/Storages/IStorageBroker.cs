@@ -6,6 +6,5 @@
 namespace Todoist.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
-    {
-    }
+    {}
 }
