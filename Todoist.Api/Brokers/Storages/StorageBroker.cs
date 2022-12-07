@@ -38,6 +38,13 @@ namespace Todoist.Api.Brokers.Storages
             return broker.Set<T>();
         }
 
+        private async ValueTask<T> SelectAsync<T>(params object[] objectIds) where T : class
+        {
+            var broker = new StorageBroker(this.configuration);
+
+            return await broker.FindAsync<T>(objectIds);
+        }
+
         private async ValueTask<T> UpdateAsync<T>(T @object)
         {
             var broker = new StorageBroker(this.configuration);
