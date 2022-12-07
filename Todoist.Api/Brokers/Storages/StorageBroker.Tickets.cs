@@ -4,6 +4,7 @@
 //==================================================
 
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Todoist.Api.Models.Tickets;
@@ -16,5 +17,8 @@ namespace Todoist.Api.Brokers.Storages
 
         public async ValueTask<Ticket> InsertTicketAsync(Ticket ticket) =>
             await InsertAsync(ticket);
+
+        public IQueryable<Ticket> SelectAllTickets() =>
+            SelectAll<Ticket>();
     }
 }
