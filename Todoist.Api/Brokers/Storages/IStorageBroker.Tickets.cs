@@ -14,5 +14,6 @@ namespace Todoist.Api.Brokers.Storages
         ValueTask<Ticket> InsertTicketAsync(Ticket ticket);
         IQueryable<Ticket> SelectAllTickets();
         ValueTask<Ticket> UpdateTicketAsync(Ticket student);
+        ValueTask<Ticket> DeleteTicketAsync(Ticket ticket);
     }
 }
