@@ -5,7 +5,6 @@
 
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 using Todoist.Api.Models.Users;
 
 namespace Todoist.Api.Brokers.Storages
