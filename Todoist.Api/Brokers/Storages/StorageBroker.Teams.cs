@@ -3,6 +3,7 @@
 // Free to use to bring order in your workplace
 //==================================================
 
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Todoist.Api.Models.Teams;
@@ -15,5 +16,8 @@ namespace Todoist.Api.Brokers.Storages
 
         public async ValueTask<Team> InsertTicketAsync(Team team) =>
             await InsertAsync(team);
+
+        public IQueryable<Team> SelectAllTeams() =>
+            SelectAll<Team>();
     }
 }
