@@ -19,5 +19,8 @@ namespace Todoist.Api.Brokers.Storages
 
         public IQueryable<Team> SelectAllTeams() =>
             SelectAll<Team>();
+
+        public async ValueTask<Team> UpdateTeamAsync(Team team) =>
+            await UpdateAsync(team);
     }
 }

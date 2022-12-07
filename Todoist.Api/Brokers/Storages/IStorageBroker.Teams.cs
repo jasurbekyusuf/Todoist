@@ -13,5 +13,6 @@ namespace Todoist.Api.Brokers.Storages
     {
         ValueTask<Team> InsertTicketAsync(Team team);
         IQueryable<Team> SelectAllTeams();
+        ValueTask<Team> UpdateTeamAsync(Team team);
     }
 }
