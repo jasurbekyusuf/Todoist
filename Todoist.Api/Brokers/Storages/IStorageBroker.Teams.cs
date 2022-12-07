@@ -6,7 +6,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Todoist.Api.Models.Teams;
-using Todoist.Api.Models.Tickets;
 
 namespace Todoist.Api.Brokers.Storages
 {
