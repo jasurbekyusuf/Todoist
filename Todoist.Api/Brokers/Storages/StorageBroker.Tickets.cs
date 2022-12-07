@@ -25,6 +25,6 @@ namespace Todoist.Api.Brokers.Storages
             await UpdateAsync(ticket);
 
         public async ValueTask<Ticket> DeleteTicketAsync(Ticket ticket) =>
-           await DeleteAsync(ticket)
+           await DeleteAsync(ticket);
     }
 }
