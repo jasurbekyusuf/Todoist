@@ -3,6 +3,7 @@
 // Free to use to bring order in your workplace
 //==================================================
 
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +20,9 @@ namespace Todoist.Api.Brokers.Storages
 
         public IQueryable<Team> SelectAllTeams() =>
             SelectAll<Team>();
+
+        public async ValueTask<Team> SelectTeamByIdAsync(Guid id) =>
+            await SelectAsync<Team>(id);
 
         public async ValueTask<Team> UpdateTeamAsync(Team team) =>
             await UpdateAsync(team);
