@@ -26,5 +26,8 @@ namespace Todoist.Api.Brokers.Storages
 
         public async ValueTask<User> UpdateUserAsync(User user) =>
             await UpdateAsync(user);
+
+        public async ValueTask<User> DeleteUserAsync(User user) =>
+            await DeleteAsync(user);
     }
 }
