@@ -26,5 +26,8 @@ namespace Todoist.Api.Brokers.Storages
 
         public async ValueTask<Team> UpdateTeamAsync(Team team) =>
             await UpdateAsync(team);
+
+        public async ValueTask<Team> DeleteTeamAsync(Team team) =>
+            await DeleteAsync(team);
     }
 }
