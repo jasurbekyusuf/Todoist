@@ -4,12 +4,14 @@
 //==================================================
 
 using System;
+using System.Linq.Expressions;
 using Moq;
 using Todoist.Api.Brokers.Loggings;
 using Todoist.Api.Brokers.Storages;
 using Todoist.Api.Models.Tickets;
 using Todoist.Api.Services.Foundations.Tickets;
 using Tynamix.ObjectFiller;
+using Xeptions;
 
 namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
 {
@@ -28,6 +30,9 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
                storageBroker: this.storageBrokerMock.Object,
                loggingBroker: this.loggingBrokerMock.Object);
         }
+
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption ecpectedException)=>
+            actualException => actualException.SameExceptionAs(ecpectedException);
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
