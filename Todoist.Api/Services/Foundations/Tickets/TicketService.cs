@@ -16,8 +16,8 @@ namespace Todoist.Api.Services.Foundations.Tickets
         public TicketService(IStorageBroker storageBroker) =>
             this.storageBroker = storageBroker;
 
-        public  ValueTask<Ticket> AddTicketAsync(Ticket ticket) =>
-            throw new System.NotImplementedException();
+        public  async ValueTask<Ticket> AddTicketAsync(Ticket ticket) =>
+            await this.storageBroker.InsertTicketAsync(ticket);
           
     }
 }
