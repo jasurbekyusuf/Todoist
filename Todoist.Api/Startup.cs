@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Todoist.Api.Brokers.Loggings;
 using Todoist.Api.Brokers.Storages;
 
 namespace Todoist.Api
@@ -24,12 +25,12 @@ namespace Todoist.Api
         {
             services.AddControllers();
             services.AddDbContext<StorageBroker>();
-            services.AddTransient<StorageBroker, StorageBroker>();
+            RegisterBroker(services);
 
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(
-                    name: "v1", 
+                    name: "v1",
                     info: new OpenApiInfo { Title = "Todoist.Api", Version = "v1" });
             });
         }
@@ -52,6 +53,11 @@ namespace Todoist.Api
 
             app.UseEndpoints(endpoints =>
                 endpoints.MapControllers());
+        }
+        private static void RegisterBroker(IServiceCollection services)
+        {
+            services.AddTransient<StorageBroker, StorageBroker>();
+            services.AddTransient<ILoggingBroker, LoggingBroker>();
         }
     }
 }
