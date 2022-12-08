@@ -56,7 +56,7 @@ namespace Todoist.Api
         }
         private static void RegisterBroker(IServiceCollection services)
         {
-            services.AddTransient<StorageBroker, StorageBroker>();
+            services.AddTransient<IStorageBroker, StorageBroker>();
             services.AddTransient<ILoggingBroker, LoggingBroker>();
         }
     }
