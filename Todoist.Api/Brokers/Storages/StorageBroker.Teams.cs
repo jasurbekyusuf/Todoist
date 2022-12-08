@@ -15,7 +15,7 @@ namespace Todoist.Api.Brokers.Storages
     {
         public DbSet<Team> Teams { get; set; }
 
-        public async ValueTask<Team> InsertTicketAsync(Team team) =>
+        public async ValueTask<Team> InsertTeamAsync(Team team) =>
             await InsertAsync(team);
 
         public IQueryable<Team> SelectAllTeams() =>

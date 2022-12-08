@@ -12,7 +12,7 @@ namespace Todoist.Api.Brokers.Storages
 {
     public partial interface IStorageBroker
     {
-        ValueTask<Team> InsertTicketAsync(Team team);
+        ValueTask<Team> InsertTeamAsync(Team team);
         IQueryable<Team> SelectAllTeams();
         ValueTask<Team> SelectTeamByIdAsync(Guid id);
         ValueTask<Team> UpdateTeamAsync(Team team);
