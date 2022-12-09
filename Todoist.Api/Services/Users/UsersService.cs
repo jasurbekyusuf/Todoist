@@ -22,7 +22,7 @@ namespace Todoist.Api.Services.Users
             this.loggingBroker = loggingBroker;
         }
 
-        public ValueTask<User> AddUserAsync(User user) =>
-            throw new NotImplementedException();
+        public async ValueTask<User> AddUserAsync(User user) =>
+            await this.storageBroker.InsertUserAsync(user);
     }
 }

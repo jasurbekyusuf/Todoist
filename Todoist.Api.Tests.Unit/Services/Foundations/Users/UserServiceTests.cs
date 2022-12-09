@@ -23,7 +23,9 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Users
         {
             this.storageBrokerMock = new Mock<IStorageBroker>();
             this.loggingBrokerMock = new Mock<ILoggingBroker>();
-            this.userService = new UsersService(this.storageBrokerMock.Object, this.loggingBrokerMock.Object);
+            this.userService = new UsersService(
+                this.storageBrokerMock.Object,
+                this.loggingBrokerMock.Object);
         }
 
         private static DateTimeOffset GetRandomDateTime() =>
