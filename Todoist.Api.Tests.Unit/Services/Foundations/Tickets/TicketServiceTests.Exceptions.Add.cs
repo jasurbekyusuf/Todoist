@@ -62,7 +62,7 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
                 new FailedTicketDependencyValidationException(duplicateKeyException);
 
             var expectedTicketDependencyValidationException =
-                new TicketDependencyException(failedTicketDependencyValidationException);
+                new TicketDependencyValidationException(failedTicketDependencyValidationException);
 
             this.storageBrokerMock.Setup(broker => broker.InsertTicketAsync(It.IsAny<Ticket>()))
                 .ThrowsAsync(duplicateKeyException);
