@@ -3,7 +3,6 @@
 // Free to use to bring order in your workplace
 //==================================================
 
-using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
@@ -25,14 +24,12 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
             var ecpectedTicketValidationException =
                 new TicketValidationException(nullTicketException);
 
-
             //when
             ValueTask<Ticket> addTicketTask =
                 this.ticketService.AddTicketAsync(noTicket);
 
             TicketValidationException actualTicketValidationException =
                 await Assert.ThrowsAsync<TicketValidationException>(addTicketTask.AsTask);
-
 
             //then
             actualTicketValidationException.Should().BeEquivalentTo(

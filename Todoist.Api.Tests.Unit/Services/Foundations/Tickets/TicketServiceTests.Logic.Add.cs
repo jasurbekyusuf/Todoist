@@ -22,15 +22,13 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
             Ticket inputTicket = randomTicket;
             Ticket persistedTicket = inputTicket;
             Ticket expectedTicket = persistedTicket.DeepClone();
- 
+
             this.storageBrokerMock.Setup(broker =>
                 broker.InsertTicketAsync(inputTicket))
                     .ReturnsAsync(persistedTicket);
 
             // Wen
             Ticket actualTicket = await this.ticketService.AddTicketAsync(inputTicket);
-
-
 
             // then
             actualTicket.Should().BeEquivalentTo(expectedTicket);

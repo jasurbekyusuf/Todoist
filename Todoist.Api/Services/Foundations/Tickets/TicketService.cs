@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Todoist.Api.Brokers.Loggings;
 using Todoist.Api.Brokers.Storages;
 using Todoist.Api.Models.Tickets;
-using Todoist.Api.Models.Tickets.Exceptions;
 
 namespace Todoist.Api.Services.Foundations.Tickets
 {
@@ -22,12 +21,12 @@ namespace Todoist.Api.Services.Foundations.Tickets
             this.loggingBroker = loggingBroker;
         }
 
-        public  ValueTask<Ticket> AddTicketAsync(Ticket ticket) =>
+        public ValueTask<Ticket> AddTicketAsync(Ticket ticket) =>
         TryCatch(async () =>
         {
             ValidateTicket(ticket);
 
-             return await this.storageBroker.InsertTicketAsync(ticket);
+            return await this.storageBroker.InsertTicketAsync(ticket);
         });
     }
 }

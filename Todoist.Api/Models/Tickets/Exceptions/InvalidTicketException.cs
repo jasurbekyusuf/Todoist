@@ -9,8 +9,8 @@ namespace Todoist.Api.Models.Tickets.Exceptions
 {
     public class InvalidTicketException : Xeption
     {
-        public InvalidTicketException() 
+        public InvalidTicketException()
             : base(message: "Ticket is invalid.")
-        {}
+        { }
     }
 }

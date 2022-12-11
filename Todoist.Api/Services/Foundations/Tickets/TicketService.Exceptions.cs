@@ -14,7 +14,7 @@ namespace Todoist.Api.Services.Foundations.Tickets
     {
         private delegate ValueTask<Ticket> ReturningTicketFunction();
 
-        private async ValueTask<Ticket> TryCatch(ReturningTicketFunction returningTicketFunction) 
+        private async ValueTask<Ticket> TryCatch(ReturningTicketFunction returningTicketFunction)
         {
             try
             {
@@ -24,7 +24,7 @@ namespace Todoist.Api.Services.Foundations.Tickets
             {
                 throw CreateAndLogValidationException(nullTicketException);
             }
-            catch(InvalidTicketException invalidTicketException) 
+            catch (InvalidTicketException invalidTicketException)
             {
                 throw CreateAndLogValidationException(invalidTicketException);
             }
@@ -40,4 +40,3 @@ namespace Todoist.Api.Services.Foundations.Tickets
         }
     }
 }
-  

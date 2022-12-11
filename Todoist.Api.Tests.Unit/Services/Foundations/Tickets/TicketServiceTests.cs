@@ -31,7 +31,7 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
                loggingBroker: this.loggingBrokerMock.Object);
         }
 
-        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption ecpectedException)=>
+        private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption ecpectedException) =>
             actualException => actualException.SameExceptionAs(ecpectedException);
 
         private static DateTimeOffset GetRandomDateTime() =>
@@ -40,7 +40,7 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
         private static Ticket CreateRandomTicket() =>
             CreateTicketFiller().Create();
 
-        private static Filler<Ticket> CreateTicketFiller() 
+        private static Filler<Ticket> CreateTicketFiller()
         {
             var filler = new Filler<Ticket>();
             DateTimeOffset dates = GetRandomDateTime();
