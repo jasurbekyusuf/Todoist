@@ -38,7 +38,7 @@ namespace Todoist.Api.Services.Foundations.Tickets
             catch (DuplicateKeyException dublicateKeyException)
             {
                 var failedTicketDependencyValidationException =
-                    new FailedTicketDependencyValidationException(dublicateKeyException);
+                    new AlreadyTicketDependencyValidationException(dublicateKeyException);
 
                 throw CreateAndDependencyValidationException(failedTicketDependencyValidationException); 
             }

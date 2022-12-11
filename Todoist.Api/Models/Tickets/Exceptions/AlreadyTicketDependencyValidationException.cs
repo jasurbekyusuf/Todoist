@@ -8,9 +8,9 @@ using Xeptions;
 
 namespace Todoist.Api.Models.Tickets.Exceptions
 {
-    public class FailedTicketDependencyValidationException : Xeption
+    public class AlreadyTicketDependencyValidationException : Xeption
     {
-        public FailedTicketDependencyValidationException(Exception innerException)
+        public AlreadyTicketDependencyValidationException(Exception innerException)
             : base(message: "Failed ticket dependency validation error occured, fix the errors and try again.",
                   innerException) 
         { }
