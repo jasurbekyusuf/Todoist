@@ -4,6 +4,7 @@
 //==================================================
 
 using System.Threading.Tasks;
+using Microsoft.Data.SqlClient;
 using Todoist.Api.Models.Tickets;
 using Todoist.Api.Models.Tickets.Exceptions;
 using Xeptions;
@@ -28,6 +29,11 @@ namespace Todoist.Api.Services.Foundations.Tickets
             {
                 throw CreateAndLogValidationException(invalidTicketException);
             }
+            catch (SqlException sqlException)
+            {
+                var failedTicketStorageException = new FailedTicketStorageException(sqlException);
+                throw CreatedAndLogCriticalDependencyException(failedTicketStorageException);
+            }
         }
 
         private TicketValidationException CreateAndLogValidationException(Xeption exception)
@@ -37,6 +43,13 @@ namespace Todoist.Api.Services.Foundations.Tickets
 
             this.loggingBroker.LogError(ticketValidationException);
             return ticketValidationException;
+        }
+        private TicketDependencyException CreatedAndLogCriticalDependencyException(Xeption exception)
+        {
+            var ticketDependencyException = new TicketDependencyException(exception);
+            this.loggingBroker.LogCritical(ticketDependencyException);
+
+            return ticketDependencyException;
         }
     }
 }

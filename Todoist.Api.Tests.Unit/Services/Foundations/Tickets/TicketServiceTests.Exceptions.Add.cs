@@ -43,7 +43,7 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
                     expectedTicketDependencyException))), Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertTicketAsync(It.IsAny<Ticket>()), Times.Never);
+                broker.InsertTicketAsync(It.IsAny<Ticket>()), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
