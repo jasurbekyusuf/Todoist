@@ -24,6 +24,10 @@ namespace Todoist.Api.Services.Foundations.Tickets
             {
                 throw CreateAndLogValidationException(nullTicketException);
             }
+            catch(InvalidTicketException invalidTicketException) 
+            {
+                throw CreateAndLogValidationException(invalidTicketException);
+            }
         }
 
         private TicketValidationException CreateAndLogValidationException(Xeption exception)

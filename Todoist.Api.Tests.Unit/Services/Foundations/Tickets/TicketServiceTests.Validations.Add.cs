@@ -3,13 +3,13 @@
 // Free to use to bring order in your workplace
 //==================================================
 
+using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Todoist.Api.Models.Tickets;
 using Todoist.Api.Models.Tickets.Exceptions;
 using Xunit;
-using Xunit.Sdk;
 
 namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
 {
@@ -52,14 +52,14 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
         [Theory]
         [InlineData(null)]
         [InlineData("")]
-        [InlineData(" ")]
-        public async Task ShouldThrowValidationExceptionOnAddIfTicketIsInvalidAndLogItAysnc(
-            string invalidString)
+        [InlineData("  ")]
+        public async Task ShouldThrowValidationExceptionOnAddIfTicketIsInvalidAndLogItAsync(
+           string invalidString)
         {
             // given
             var invalidTicket = new Ticket
             {
-                Title = invalidString,
+                Title = invalidString
             };
 
             var invalidTicketException = new InvalidTicketException();
@@ -77,20 +77,20 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
                 values: "Value is required");
 
             invalidTicketException.AddData(
-                key: nameof(Ticket.CreatedDate),
-                values: "Text is required");
+               key: nameof(Ticket.CreatedDate),
+               values: "Value is required");
 
             invalidTicketException.AddData(
-                key: nameof(Ticket.UpdatedDate),
-                values: "Text is required");
+               key: nameof(Ticket.UpdatedDate),
+               values: "Value is required");
 
             invalidTicketException.AddData(
-                key: nameof(Ticket.CreatedUserId),
-                values: "Text is required");
+               key: nameof(Ticket.CreatedUserId),
+               values: "Id is required");
 
             invalidTicketException.AddData(
-                key: nameof(Ticket.UpdatedUserId),
-                values: "Text is required");
+              key: nameof(Ticket.UpdatedUserId),
+              values: "Id is required");
 
             var expectedTicketValidationException =
                 new TicketValidationException(invalidTicketException);
@@ -98,18 +98,18 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
             // when
             ValueTask<Ticket> addTicketTask = this.ticketService.AddTicketAsync(invalidTicket);
 
-            TicketValidationException actualValidationException =
+            TicketValidationException actualTicketValidationException =
                 await Assert.ThrowsAsync<TicketValidationException>(addTicketTask.AsTask);
 
-            //then
-            actualValidationException.Should().BeEquivalentTo(expectedTicketValidationException);
+            // then
+            actualTicketValidationException.Should().BeEquivalentTo(expectedTicketValidationException);
 
             this.loggingBrokerMock.Verify(broker =>
                 broker.LogError(It.Is(SameExceptionAs(
                     expectedTicketValidationException))), Times.Once);
 
             this.storageBrokerMock.Verify(broker =>
-                broker.InsertTicketAsync(It.IsAny<Ticket>()), Times.Once());
+                broker.InsertTicketAsync(It.IsAny<Ticket>()), Times.Never);
 
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();

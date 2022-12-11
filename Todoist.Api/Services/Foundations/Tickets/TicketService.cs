@@ -25,7 +25,7 @@ namespace Todoist.Api.Services.Foundations.Tickets
         public  ValueTask<Ticket> AddTicketAsync(Ticket ticket) =>
         TryCatch(async () =>
         {
-            ValidateTicketNotNull(ticket);
+            ValidateTicket(ticket);
 
              return await this.storageBroker.InsertTicketAsync(ticket);
         });

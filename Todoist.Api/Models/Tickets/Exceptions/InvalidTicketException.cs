@@ -11,7 +11,6 @@ namespace Todoist.Api.Models.Tickets.Exceptions
     {
         public InvalidTicketException() 
             : base(message: "Ticket is invalid.")
-        {
-        }
+        {}
     }
 }
