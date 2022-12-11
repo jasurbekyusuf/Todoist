@@ -5,6 +5,8 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
+using Microsoft.Data.SqlClient;
 using Moq;
 using Todoist.Api.Brokers.Loggings;
 using Todoist.Api.Brokers.Storages;
@@ -33,6 +35,9 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption ecpectedException) =>
             actualException => actualException.SameExceptionAs(ecpectedException);
+
+        private static SqlException CreateSqlException() =>
+            (SqlException)FormatterServices.GetSafeUninitializedObject(typeof(SqlException));
 
         private static DateTimeOffset GetRandomDateTime() =>
             new DateTimeRange(earliestDate: DateTime.UnixEpoch).GetValue();
