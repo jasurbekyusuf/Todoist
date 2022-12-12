@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using FluentAssertions;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Todoist.Api.Models.Tickets;
 using Todoist.Api.Models.Tickets.Exceptions;
@@ -83,6 +84,36 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
 
             this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(SameExceptionAs(
                 expectedTicketDependencyValidationException))), Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowDependencyValidationExceptionOnAddIfDbConcurrencyErrorOccursAndLogItAsync()
+        {
+            // given
+            Ticket someTicket = CreateRandomTicket();
+            var dbUpdateConcurrencyException = new DbUpdateConcurrencyException();
+
+            var lockedTicketException = new LockedTicketException(dbUpdateConcurrencyException);
+            var expectedTicketDependencyValidationException = new TicketDependencyValidationException(lockedTicketException);
+
+            this.storageBrokerMock.Setup(broker => broker.InsertTicketAsync(It.IsAny<Ticket>()))
+                .ThrowsAsync(dbUpdateConcurrencyException);
+            
+            // when
+            ValueTask<Ticket> addTicketTask = this.ticketService.AddTicketAsync(someTicket);
+
+            TicketDependencyValidationException actualTicketDependencyValidationException =
+                await Assert.ThrowsAsync<TicketDependencyValidationException>(addTicketTask.AsTask);
+
+            // then
+            actualTicketDependencyValidationException.Should().BeEquivalentTo(expectedTicketDependencyValidationException);
+
+            this.storageBrokerMock.Verify(broker => broker.InsertTicketAsync(It.IsAny<Ticket>()), Times.Once);
+            this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(
+                SameExceptionAs(expectedTicketDependencyValidationException))),Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
