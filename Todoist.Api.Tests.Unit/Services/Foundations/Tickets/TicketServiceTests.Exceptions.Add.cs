@@ -58,11 +58,12 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
             string someMessage = GetRandomString();
             var duplicateKeyException = new DuplicateKeyException(someMessage);
 
-            var failedTicketDependencyValidationException = 
+
+            var alreadyExistsTicketException =
                 new AlreadyTicketDependencyValidationException(duplicateKeyException);
 
             var expectedTicketDependencyValidationException =
-                new TicketDependencyValidationException(failedTicketDependencyValidationException);
+                new TicketDependencyValidationException(alreadyExistsTicketException);
 
             this.storageBrokerMock.Setup(broker => broker.InsertTicketAsync(It.IsAny<Ticket>()))
                 .ThrowsAsync(duplicateKeyException);

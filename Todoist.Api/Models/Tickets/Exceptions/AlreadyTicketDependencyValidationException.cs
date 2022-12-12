@@ -11,7 +11,7 @@ namespace Todoist.Api.Models.Tickets.Exceptions
     public class AlreadyTicketDependencyValidationException : Xeption
     {
         public AlreadyTicketDependencyValidationException(Exception innerException)
-            : base(message: "Failed ticket dependency validation error occured, fix the errors and try again.",
+            : base(message: "Ticket already exists.",
                   innerException) 
         { }
     }
