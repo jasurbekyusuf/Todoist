@@ -121,7 +121,7 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
         }
 
         [Fact]
-        public async Task ShouldThrowServiceValidationExceptionOnAddIfServiceErrorOccursAndLogItAsync()
+        public async Task ShouldThrowServiceExceptionOnAddIfServiceErrorOccursAndLogItAsync()
         {
             // given
             Ticket someTicket = CreateRandomTicket();
