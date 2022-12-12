@@ -3,6 +3,7 @@
 // Free to use to bring order in your workplace
 //==================================================
 
+using System;
 using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using Microsoft.Data.SqlClient;
@@ -49,6 +50,19 @@ namespace Todoist.Api.Services.Foundations.Tickets
 
                 throw CreateAndDependencyValidationException(lockedTicketException);
             }
+            catch (Exception serviceException)
+            {
+                var failedTicketServiceException = new FailedTicketServiceException(serviceException);
+
+                throw CreateAndLogServiceException(failedTicketServiceException); 
+            }
+        }
+        private Exception CreateAndLogServiceException(Xeption exception)
+        {
+            var ticketServiceException = new TicketServiceException(exception);
+            this.loggingBroker.LogError(ticketServiceException);
+
+            return ticketServiceException;
         }
 
         private TicketValidationException CreateAndLogValidationException(Xeption exception)

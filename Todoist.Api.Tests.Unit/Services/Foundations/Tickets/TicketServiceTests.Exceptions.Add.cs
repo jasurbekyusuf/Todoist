@@ -3,6 +3,7 @@
 // Free to use to bring order in your workplace
 //==================================================
 
+using System;
 using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using FluentAssertions;
@@ -114,6 +115,36 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
             this.storageBrokerMock.Verify(broker => broker.InsertTicketAsync(It.IsAny<Ticket>()), Times.Once);
             this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(
                 SameExceptionAs(expectedTicketDependencyValidationException))),Times.Once);
+
+            this.storageBrokerMock.VerifyNoOtherCalls();
+            this.loggingBrokerMock.VerifyNoOtherCalls();
+        }
+
+        [Fact]
+        public async Task ShouldThrowServiceValidationExceptionOnAddIfServiceErrorOccursAndLogItAsync()
+        {
+            // given
+            Ticket someTicket = CreateRandomTicket();
+            var serviceException = new Exception();
+
+            var failedTicketServiceException = new FailedTicketServiceException(serviceException);
+            var expectedTicketServiceException = new TicketServiceException(failedTicketServiceException);
+
+            this.storageBrokerMock.Setup(broker => broker.InsertTicketAsync(It.IsAny<Ticket>()))
+                .ThrowsAsync(serviceException);
+
+            // when
+            ValueTask<Ticket> addTicketTask = this.ticketService.AddTicketAsync(someTicket);
+
+            TicketServiceException actualTicketServiceException =
+                await Assert.ThrowsAsync<TicketServiceException>(addTicketTask.AsTask);
+
+            // then
+            actualTicketServiceException.Should().BeEquivalentTo(expectedTicketServiceException);
+
+            this.storageBrokerMock.Verify(broker => broker.InsertTicketAsync(It.IsAny<Ticket>()), Times.Once);
+            this.loggingBrokerMock.Verify(broker => broker.LogError(It.Is(
+                SameExceptionAs(expectedTicketServiceException))), Times.Once);
 
             this.storageBrokerMock.VerifyNoOtherCalls();
             this.loggingBrokerMock.VerifyNoOtherCalls();
