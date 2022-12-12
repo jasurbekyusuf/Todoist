@@ -6,6 +6,7 @@
 using System.Threading.Tasks;
 using EFxceptions.Models.Exceptions;
 using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Todoist.Api.Models.Tickets;
 using Todoist.Api.Models.Tickets.Exceptions;
 using Xeptions;
@@ -41,6 +42,12 @@ namespace Todoist.Api.Services.Foundations.Tickets
                     new AlreadyTicketDependencyValidationException(dublicateKeyException);
 
                 throw CreateAndDependencyValidationException(failedTicketDependencyValidationException); 
+            }
+            catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
+            {
+                var lockedTicketException = new LockedTicketException(dbUpdateConcurrencyException);
+
+                throw CreateAndDependencyValidationException(lockedTicketException);
             }
         }
 
