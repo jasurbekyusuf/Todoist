@@ -149,5 +149,20 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
             this.loggingBrokerMock.VerifyNoOtherCalls();
             this.storageBrokerMock.VerifyNoOtherCalls();
         }
+
+        [Theory]
+        [MemberData(nameof(InvalidSeconds))]
+        public async Task ShouldThrowValidationExceptionOnAddIfCreatedDateIsNotRecentAndLogItAsync(
+            int invalidSeconds)
+        {
+            // given
+            DateTimeOffset randomDateTime = GetRandomDateTime();
+           
+
+            // when
+
+
+            // then
+        }
     }
 }
