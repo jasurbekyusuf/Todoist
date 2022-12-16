@@ -14,6 +14,7 @@ using Todoist.Api.Models.Tickets;
 using Todoist.Api.Services.Foundations.Tickets;
 using Tynamix.ObjectFiller;
 using Xeptions;
+using Xunit;
 
 namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
 {
@@ -31,6 +32,22 @@ namespace Todoist.Api.Tests.Unit.Services.Foundations.Tickets
             this.ticketService = new TicketService(
                storageBroker: this.storageBrokerMock.Object,
                loggingBroker: this.loggingBrokerMock.Object);
+        }
+
+        public static TheoryData<int> InvalidSeconds()
+        {
+            int secondsInPast = -1 * new IntRange(
+                min: 60,
+                max: short.MaxValue).GetValue();
+            int secondsInFuture = new IntRange(
+                min: 0,
+                max: short.MaxValue).GetValue();
+
+            return new TheoryData<int>
+            {
+                secondsInPast,
+                secondsInFuture
+            };
         }
 
         private Expression<Func<Xeption, bool>> SameExceptionAs(Xeption ecpectedException) =>
