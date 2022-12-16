@@ -4,8 +4,6 @@
 //==================================================
 
 using System;
-using System.Data;
-using System.Reflection.Metadata;
 using Todoist.Api.Models.Tickets;
 using Todoist.Api.Models.Tickets.Exceptions;
 
@@ -27,10 +25,11 @@ namespace Todoist.Api.Services.Foundations.Tickets
                 (Rule: IsInvalid(ticket.CreatedUserId), Parameter: nameof(Ticket.UpdatedUserId)),
 
                 (Rule: IsNotSame(
-                    ticket.CreatedDate, ticket.UpdatedDate,
-                    nameof(ticket.UpdatedDate)), Parameter: nameof(Ticket.CreatedDate))
-                    
-                   );
+                    firstDate: ticket.CreatedDate,
+                    secondDate: ticket.UpdatedDate,
+                    secondDateName: nameof(ticket.UpdatedDate)),
+
+                Parameter: nameof(Ticket.CreatedDate)));
         }
 
         private static dynamic IsInvalid(Guid id) => new
@@ -52,13 +51,13 @@ namespace Todoist.Api.Services.Foundations.Tickets
         };
 
         private static dynamic IsNotSame(
-            DateTimeOffset firstDate, 
-            DateTimeOffset secondDate, 
+            DateTimeOffset firstDate,
+            DateTimeOffset secondDate,
             string secondDateName) => new
-        {
-            Condition = firstDate != secondDate,
-            Message = $"Date is not same as {secondDateName}"
-        };
+            {
+                Condition = firstDate != secondDate,
+                Message = $"Date is not same as {secondDateName}"
+            };
 
         private static void ValidateTicketNotNull(Ticket ticket)
         {
