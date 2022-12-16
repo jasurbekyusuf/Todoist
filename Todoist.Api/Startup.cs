@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Todoist.Api.Brokers.DateTimes;
 using Todoist.Api.Brokers.Loggings;
 using Todoist.Api.Brokers.Storages;
 
@@ -58,6 +59,7 @@ namespace Todoist.Api
         {
             services.AddTransient<IStorageBroker, StorageBroker>();
             services.AddTransient<ILoggingBroker, LoggingBroker>();
+            services.AddTransient<IDateTimeBroker, DateTimeBroker>();
         }
     }
 }
